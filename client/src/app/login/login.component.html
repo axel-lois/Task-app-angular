@@ -9,7 +9,7 @@
         />
       </div>
       <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-        <form>
+        <form [formGroup]="createdForm" (submit)="login($event)">
           <!-- Email input -->
           <div class="form-outline mb-4">
             <input
@@ -17,7 +17,27 @@
               id="form3Example3"
               class="form-control form-control-lg"
               placeholder="Enter a valid email address"
+              formControlName="email"
             />
+            <p
+              class="text-danger mt-2"
+              *ngIf="
+                createdForm.controls['email'].hasError('required') &&
+                createdForm.controls['email'].touched
+              "
+            >
+              Email is required.
+            </p>
+
+            <p
+              class="text-danger mt-2"
+              *ngIf="
+                createdForm.controls['email'].hasError('email') &&
+                createdForm.controls['email'].touched
+              "
+            >
+              Please insert a valid email.
+            </p>
           </div>
 
           <!-- Password input -->
@@ -27,13 +47,30 @@
               id="form3Example4"
               class="form-control form-control-lg"
               placeholder="Enter password"
+              formControlName="password"
             />
+            <p
+              class="text-danger mt-2"
+              *ngIf="
+                createdForm.controls['password'].hasError('required') &&
+                createdForm.controls['password'].touched
+              "
+            >
+              Please insert your password.
+            </p>
+            <p
+              class="text-danger mt-2"
+              *ngIf="
+                createdForm.controls['password'].hasError('minlength') &&
+                createdForm.controls['password'].touched
+              "
+            >
+              Password must be at least 5 characters long.
+            </p>
           </div>
-
-
-          <div class="text-center text-lg-start mt-4 pt-2">
+          <div class="text-center text-lg-start mt-1 pt-2">
             <button
-              type="button"
+              type="submit"
               class="btn btn-primary btn-lg w-100"
               style="padding-left: 2.5rem; padding-right: 2.5rem"
             >
@@ -44,10 +81,14 @@
               <a href="#!" class="link-danger">Register</a>
             </p>
           </div>
+          <p
+            class="text-danger text-center mt-2 fw-bold"
+            *ngIf="responseErrors"
+          >
+            {{ responseErrors }}
+          </p>
         </form>
       </div>
     </div>
   </div>
-  
-  
 </section>

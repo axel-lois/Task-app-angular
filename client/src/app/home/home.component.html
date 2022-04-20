@@ -1,1 +1,26 @@
-<p>home works!</p>
+<div class="app">
+  <div class="container d-flex justify-content-around">
+    <div class="row d-flex flex-row align-items-center">
+      <div class="col-md-6 mt-5">
+        <img
+          class="img-responsive me-5"
+          src="../../assets/book.svg"
+          width="500px"
+          height="400px"
+          alt="handbook"
+        />
+      </div>
+      <div class="col-md-6 d-flex flex-column align-items-center">
+        <h1>Welcome to my task app!</h1>
+        <h4>You can track your tasks here</h4>
+        <button
+          *ngIf="!loginService.logged"
+          routerLink="/login"
+          class="mt-3 btn btn-primary text-center w-50"
+        >
+          Please login to continue
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -35,22 +35,27 @@ const userProfile = async (req, res) => {
 };
 
 const login = async (req, res) => {
-    try {
-        const {email,password} = req.body;
-        if (!email || !password) {
-         return res.status(401).send({ error: "Missing data." });
-        }
-        const user = await User.findOne({ where: { email}})
-        if (!user) {
-            return res.status(401).send({ error: "User not found." });
-        }
-        if(password !== user.password) {
-            return res.status(401).send({ error: "Password is incorrect." });
-        }
-        res.send({ succesMsg: "User logged in.",data: user});
-    } catch (error) {
-        res.status(500).send({ error:error.message });
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(401).send({ error: "Missing data." });
     }
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      return res.status(401).send({ error: "User not found." });
+    }
+    if (password !== user.password) {
+      return res.status(401).send({ error: "Password is incorrect." });
+    }
+    const mappedUser = {
+      name: user.name,
+      surname: user.surname,
+      id: user.id,
+    };
+    res.send({ succesMsg: "User logged in.", data: mappedUser });
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
 };
 
 const logout = (req, res) => {};

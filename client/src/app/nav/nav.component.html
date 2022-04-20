@@ -18,6 +18,13 @@
     >
       <ul class="navbar-nav">
         <li class="nav-item me-2">
+          <span
+            *ngIf="loginService.logged"
+            class="nav-link fs-5"
+            >Hi, {{loginService.user.name +  ' ' +loginService.user.surname}}</span
+          >
+        </li>
+        <li class="nav-item me-2">
           <a
             [routerLinkActiveOptions]="{ exact: true }"
             routerLinkActive="active"
@@ -29,6 +36,7 @@
         </li>
         <li class="nav-item me-2">
           <a
+            *ngIf="!loginService.logged"
             [routerLinkActiveOptions]="{ exact: true }"
             routerLinkActive="active"
             routerLink="/login"
@@ -38,12 +46,17 @@
         </li>
         <li class="nav-item me-2">
           <a
+            *ngIf="loginService.logged"
             [routerLinkActiveOptions]="{ exact: true }"
             routerLinkActive="active"
             routerLink="/tasks"
             class="nav-link fs-5"
             >Tasks</a
           >
+        </li>
+
+        <li class="nav-item me-2">
+          <a *ngIf="loginService.logged" (click)="onLogout()" class="nav-link fs-5">Logout</a>
         </li>
       </ul>
     </div>

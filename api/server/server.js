@@ -6,11 +6,13 @@ const PORT = 3001 || process.env.PORT;
 const taskRouter = require("../routes/task");
 const userRouter = require("../routes/user");
 const fillScript = require("../utils/script");
+const cors = require('cors');
 
 //middleware
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 server.use(morgan("dev"));
+server.use(cors());
 
 server.use("/api", taskRouter);
 server.use("/api", userRouter);

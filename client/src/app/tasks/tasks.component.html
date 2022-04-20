@@ -1,1 +1,54 @@
-<p>tasks works!</p>
+<form
+  class="createTaskForm"
+  [formGroup]="taskForm"
+  (submit)="createTask($event)"
+>
+  <label for="title" class="text-center fw-bold mb-2"> Title</label>
+  <input
+    formControlName="title"
+    placeholder="Enter title..."
+    class="form-control shadow-none mb-3 w-100 fw-bold"
+    id="title"
+  />
+  <p
+    class="text-center fw-bold text-danger"
+    *ngIf="
+      taskForm.controls['title'].hasError('required') &&
+      taskForm.controls['title'].touched
+    "
+  >
+    Title is required.
+  </p>
+  <label for="description" class="text-center fw-bold mb-2">Description</label>
+  <input
+    formControlName="description"
+    placeholder="Enter description..."
+    class="form-control shadow-none mb-3 w-100 fw-bold"
+    id="description"
+  />
+  <p
+    class="text-center fw-bold text-danger"
+    *ngIf="
+      taskForm.controls['description'].hasError('required') &&
+      taskForm.controls['description'].touched
+    "
+  >
+    Description is required.
+  </p>
+  <button class="btn btn-primary w-100 text-center fw-bold">Create task</button>
+</form>
+
+<div class="cards">
+  <div
+    *ngFor="let task of taskService.tasks"
+    class="card mt-3"
+    style="width: 18rem"
+  >
+    <div class="card-body">
+      <h5 class="card-title">{{task.title}}</h5>
+      <p class="card-text">
+        {{task.description}}
+      </p>
+    </div>
+  </div>
+</div>
