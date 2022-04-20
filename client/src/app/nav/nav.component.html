@@ -1,1 +1,51 @@
-<p>nav works!</p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand">Task app</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div
+      class="collapse navbar-collapse d-flex justify-content-end me-3"
+      id="navbarNavDropdown"
+    >
+      <ul class="navbar-nav">
+        <li class="nav-item me-2">
+          <a
+            [routerLinkActiveOptions]="{ exact: true }"
+            routerLinkActive="active"
+            routerLink="/"
+            class="nav-link fs-5"
+            aria-current="page"
+            >Home</a
+          >
+        </li>
+        <li class="nav-item me-2">
+          <a
+            [routerLinkActiveOptions]="{ exact: true }"
+            routerLinkActive="active"
+            routerLink="/login"
+            class="nav-link fs-5"
+            >Login</a
+          >
+        </li>
+        <li class="nav-item me-2">
+          <a
+            [routerLinkActiveOptions]="{ exact: true }"
+            routerLinkActive="active"
+            routerLink="/tasks"
+            class="nav-link fs-5"
+            >Tasks</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
