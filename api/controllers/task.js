@@ -17,7 +17,14 @@ const createTask = async (req, res) => {
       description,
       UserId,
     });
-    res.send({ successMsg: "Task created", data: task });
+    const mappedTask = {
+      id: task.id,
+      title: task.title,
+      description: task.description,
+      isCompleted: task.isCompleted,
+    };
+
+    res.send({ successMsg: "Task created", data: mappedTask });
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
@@ -30,7 +37,7 @@ const updateTask = async (req, res) => {
     UserId = Number(UserId);
     id = Number(id);
     if (!title || !id || !description || isCompleted === undefined || !UserId) {
-      console.log(title, id,description, isCompleted,UserId);
+      console.log(title, id, description, isCompleted, UserId);
       return res.status(400).send({ error: "Missing parameters." });
     }
     const user = await User.findOne({ where: { id: UserId } });
@@ -42,7 +49,13 @@ const updateTask = async (req, res) => {
       return res.status(404).send({ error: "Task not found" });
     }
     await task.update({ title, description, isCompleted });
-    res.send({ successMsg: "Task succesfully updated", data: task });
+    const mappedTask = {
+      id: task.id,
+      title: task.title,
+      description: task.description,
+      isCompleted: task.isCompleted,
+    };
+    res.send({ successMsg: "Task successfully updated", data: mappedTask });
   } catch (error) {}
 };
 
@@ -54,7 +67,7 @@ const deleteTask = async (req, res) => {
     if (!id || !UserId) {
       return res.status(400).send({ error: "Missing parameter." });
     }
-    const user = await User.findOne({ where: { id: id } });
+    const user = await User.findOne({ where: { id: UserId } });
     if (!user) {
       return res.status(404).send({ error: "User not found." });
     }
@@ -63,7 +76,7 @@ const deleteTask = async (req, res) => {
       return res.status(404).send({ error: "Task not found." });
     }
     await task.destroy();
-    res.send({ successMsg: "Task succesfully deleted." });
+    res.send({ successMsg: "Task successfully deleted." });
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
@@ -106,7 +119,31 @@ const getAllTasks = async (req, res) => {
     if (!tasks) {
       return res.status(404).send({ error: "No tasks found." });
     }
-    res.send({ successMsg: "Tasks", data: tasks });
+    const mappedTasks = tasks.map((task) => {
+      return {
+        id: task.id,
+        title: task.title,
+        description: task.description,
+        isCompleted: task.isCompleted,
+      };
+    });
+    res.send({ successMsg: "Tasks", data: mappedTasks });
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+};
+
+const toggleTask = async (req, res) => {
+  try {
+    let { id, UserId } = req.params;
+    id = Number(id);
+    UserId = Number(UserId);
+    const task = await Task.findOne({ where: { UserId, id } });
+    if (!task) {
+      return res.status(404).send({ error: "Task not found." });
+    }
+    await task.update({ isCompleted: !task.isCompleted });
+    res.send({ successMsg: "Task updated." });
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
@@ -118,4 +155,5 @@ module.exports = {
   deleteTask,
   getTask,
   getAllTasks,
+  toggleTask,
 };

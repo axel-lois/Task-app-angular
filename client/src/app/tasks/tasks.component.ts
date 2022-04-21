@@ -1,8 +1,10 @@
 import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { LoginService } from '../services/login.service';
 import { TaskService } from '../services/task.service';
+import { ITask } from '../services/task.service';
 
 @Component({
   selector: 'app-tasks',
@@ -20,22 +22,19 @@ export class TasksComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.loginService.logged) {
-      // this.router.navigate(['/login']);
+      this.router.navigate(['/login']);
     }
     this.createForm();
     this.taskService.getTasks().subscribe(
       (tasks: any) => {
-        console.log(tasks);
-        this.taskService.tasks = tasks.data;
-        //set values
+        this.taskService.setTasks(tasks.data);
+        console.log(this.taskService.tasks);
       },
       (err: any) => {
         console.log(err);
       }
     );
   }
-
-  ngOnChanges(changes: SimpleChanges): void {}
 
   createForm(): void {
     this.taskForm = this.formBuilder.group(
@@ -52,7 +51,24 @@ export class TasksComponent implements OnInit {
     this.taskForm.updateValueAndValidity();
     if (this.taskForm.valid) {
       this.taskService.createTask(this.taskForm.value);
+      Swal.fire({
+        title: 'Task successfully created',
+        icon: 'success',
+        confirmButtonText: 'Ok',
+        confirmButtonColor: '#0d6efd',
+      });
     }
-    console.log(this.taskForm.value);
+  }
+
+  toggleStatus(task: ITask) {
+    this.taskService.toggleStatus(task);
+  }
+
+  //Use a modal to update task.
+  updateTask() {}
+
+  deleteTask(id: number) {
+    Swal.fire({}); //check if he wants to delete and then delete.
+    this.taskService.deleteTask(id);
   }
 }

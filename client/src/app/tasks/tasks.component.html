@@ -42,12 +42,34 @@
   <div
     *ngFor="let task of taskService.tasks"
     class="card mt-3"
-    style="width: 18rem"
+    style="width: 400px"
   >
     <div class="card-body">
-      <h5 class="card-title">{{task.title}}</h5>
-      <p class="card-text">
-        {{task.description}}
+      <div class="d-flex justify-content-around">
+        <h5 class="card-title fw-bold fs-4 text-center text-primary">
+          {{ task.title | capitalize }}
+        </h5>
+        <div>
+          <button (click)="deleteTask(task.id)" class="btn btn-danger me-1">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+          <button  class="btn btn-warning me-1">
+            <i class="fa-solid fa-pen"></i>
+          </button>
+          <button (click)="toggleStatus(task)" *ngIf="!task.isCompleted" class="btn btn-success">
+            <i class="fa-solid fa-circle-check"></i>
+          </button>
+          <button
+            (click)="toggleStatus(task)"
+            *ngIf="task.isCompleted"
+            class="btn btn-danger"
+          >
+            <i class="fa-solid fa-ban"></i>
+          </button>
+        </div>
+      </div>
+      <p class="card-text fs-5 text-center">
+        {{ task.description }}
       </p>
     </div>
   </div>

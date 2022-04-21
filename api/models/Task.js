@@ -8,7 +8,7 @@ module.exports = (Sequelize, DataTypes) => {
         autoIncrement: true,
       },
       title: { type: DataTypes.STRING, allowNull: false },
-      description: { type: DataTypes.STRING, allowNull: false },
+      description: { type: DataTypes.TEXT, allowNull: false },
       isCompleted: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
