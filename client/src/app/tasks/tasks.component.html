@@ -41,22 +41,29 @@
 <div class="cards">
   <div
     *ngFor="let task of taskService.tasks"
-    class="card mt-3"
-    style="width: 400px"
+    class="card mt-3 d-flex flex-wrap m-1 h-100"
+    [ngClass]="{ uncompleted: !task.isCompleted, completed: task.isCompleted }"
   >
-    <div class="card-body">
-      <div class="d-flex justify-content-around">
-        <h5 class="card-title fw-bold fs-4 text-center text-primary">
+    <div class="card-body d-flex flex-column justify-content-between p-2">
+      <div class="d-flex justify-content-between mt-2">
+        <h5 class="card-title fw-bold me-2 fs-4 text-center">
           {{ task.title | capitalize }}
         </h5>
-        <div>
+        <div class="d-flex justify-content-center align-items-center me-2">
           <button (click)="deleteTask(task.id)" class="btn btn-danger me-1">
             <i class="fa-solid fa-trash-can"></i>
           </button>
-          <button  class="btn btn-warning me-1">
+          <button
+            (click)="openDialog(task.id, task.title, task.description)"
+            class="btn btn-warning me-1"
+          >
             <i class="fa-solid fa-pen"></i>
           </button>
-          <button (click)="toggleStatus(task)" *ngIf="!task.isCompleted" class="btn btn-success">
+          <button
+            (click)="toggleStatus(task)"
+            *ngIf="!task.isCompleted"
+            class="btn btn-success"
+          >
             <i class="fa-solid fa-circle-check"></i>
           </button>
           <button
@@ -68,7 +75,7 @@
           </button>
         </div>
       </div>
-      <p class="card-text fs-5 text-center">
+      <p class="card-text fs-5 mt-2 text-center text-break">
         {{ task.description }}
       </p>
     </div>

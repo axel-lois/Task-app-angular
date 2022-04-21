@@ -26,15 +26,21 @@ export class TaskService {
     return this.http.get(this.tasksUrl + this.loginService.user.id);
   }
 
-  getOneTask(id: string) {
-    return this.http.get(this.tasksUrl + this.loginService.user.id + '/' + id);
-  }
-
-  updateTask(id: string, newTask: ITask) {
-    return this.http.put(
-      this.tasksUrl + this.loginService.user.id + '/' + id,
-      newTask
-    );
+  updateTask(values: any) {
+    console.log(values);
+    this.http
+      .put(this.tasksUrl + this.loginService.user.id + '/' + values.id, {
+        title: values.title,
+        description: values.description,
+      })
+      .subscribe(
+        (res: any) => {
+          console.log(res);
+        },
+        (err: any) => {
+          console.log(err);
+        }
+      );
   }
 
   toggleStatus(task: ITask) {

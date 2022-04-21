@@ -32,12 +32,11 @@ const createTask = async (req, res) => {
 
 const updateTask = async (req, res) => {
   try {
-    const { title, description, isCompleted } = req.body;
+    const { title, description } = req.body;
     let { UserId, id } = req.params;
     UserId = Number(UserId);
     id = Number(id);
-    if (!title || !id || !description || isCompleted === undefined || !UserId) {
-      console.log(title, id, description, isCompleted, UserId);
+    if (!title || !id || !description || !UserId) {
       return res.status(400).send({ error: "Missing parameters." });
     }
     const user = await User.findOne({ where: { id: UserId } });
@@ -48,7 +47,7 @@ const updateTask = async (req, res) => {
     if (!task) {
       return res.status(404).send({ error: "Task not found" });
     }
-    await task.update({ title, description, isCompleted });
+    await task.update({ title, description });
     const mappedTask = {
       id: task.id,
       title: task.title,
@@ -56,7 +55,9 @@ const updateTask = async (req, res) => {
       isCompleted: task.isCompleted,
     };
     res.send({ successMsg: "Task successfully updated", data: mappedTask });
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
 };
 
 const deleteTask = async (req, res) => {

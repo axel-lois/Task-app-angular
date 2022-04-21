@@ -7,27 +7,41 @@
   align-items: center;
   width: 60% !important;
   padding: 20px;
-  margin-top:50px
+  margin-top: 50px;
 }
 
 :host {
   background-color: #e9f0f3 !important;
   display: flex;
-  flex-direction: column  ;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;  
+  align-items: center;
 }
 
 .createTaskForm p {
-    margin-top:-15px
+  margin-top: -15px;
 }
 
-
 .cards {
-  border: 1px solid red;
-  margin-top:50px;
-  display:flex;
+  margin-top: 50px;
+  display: flex;
   flex-wrap: wrap;
   width: 90% !important;
   justify-content: space-around;
+}
+
+
+.card {
+  width: 40% !important;
+}
+
+.uncompleted {
+  background-color: #a40606;
+  background-image: linear-gradient(315deg, #a40606 0%, #d98324 74%);
+  color: white;
+}
+
+.completed {
+  background-color: #7ee8fa;
+  background-image: linear-gradient(315deg, #7ee8fa 0%, #80ff72 74%);
 }

@@ -10,7 +10,9 @@ import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CapitalizePipe } from './pipes/capitalize.pipe';
-
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { UpdateFormComponent } from './update-form/update-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,9 +21,19 @@ import { CapitalizePipe } from './pipes/capitalize.pipe';
     TasksComponent,
     HomeComponent,
     CapitalizePipe,
+    UpdateFormComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, ReactiveFormsModule],
-  providers: [],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    NoopAnimationsModule,
+    MatDialogModule,
+  ],
+  providers: [
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

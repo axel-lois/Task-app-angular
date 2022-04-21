@@ -1,0 +1,48 @@
+<form (submit)="onSubmit()" class="d-flex flex-column" [formGroup]="updateForm">
+  <div>
+    <div class="form-group">
+      <label class="control-label fw-bold" for="title">Title:</label>
+      <input
+        formControlName="title"
+        id="title"
+        class="form-control"
+        type="text"
+      />
+      <p
+        class="text-danger text-center"
+        *ngIf="
+          updateForm.controls['title'].hasError('required') &&
+          updateForm.controls['title'].touched
+        "
+      >
+        Title is required
+      </p>
+    </div>
+    <div class="form-group">
+      <label class="control-label fw-bold" for="description "
+        >Description:</label
+      >
+      <textarea
+        formControlName="description"
+        id="description"
+        class="form-control"
+        type="text"
+      ></textarea>
+      <p
+        class="text-danger text-center"
+        *ngIf="
+          updateForm.controls['description'].hasError('required') &&
+          updateForm.controls['description'].touched
+        "
+      >
+        Description is required.
+      </p>
+    </div>
+  </div>
+  <div class="mt-4 align-self-end">
+    <button class="btn btn-warning me-1" type="submit">Edit</button>
+    <button class="btn btn-danger" (click)="onClose()" type="button">
+      Cancel
+    </button>
+  </div>
+</form>
